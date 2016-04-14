@@ -10,26 +10,30 @@
  */
 angular
   .module('angularstreamioApp', [
+    'ui.router',
     'ngAnimate',
     'ngCookies',
     'ngResource',
-    'ngRoute',
     'ngSanitize',
     'ngTouch'
   ])
-  .config(function ($routeProvider) {
-    $routeProvider
-      .when('/', {
+  .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
+    $httpProvider.defaults.useXDomain = true;
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    $httpProvider.defaults.headers.common['Content-Type'] = 'application/json';
+    $httpProvider.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+
+    $urlRouterProvider.otherwise('/');
+
+    $stateProvider
+      .state('public', {
+        url: '',
+        abstract: true,
+        template: '<ui-view></ui-view>'
+      })
+      .state('public.main', {
+        url: '/',
         templateUrl: 'views/main.html',
-        controller: 'MainCtrl',
-        controllerAs: 'main'
-      })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl',
-        controllerAs: 'about'
-      })
-      .otherwise({
-        redirectTo: '/'
+        controller: 'MainCtrl'
       });
   });

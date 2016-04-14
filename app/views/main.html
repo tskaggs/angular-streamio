@@ -1,3 +1,30 @@
 <div class="row marketing">
-  <h4>Welcome!</h4>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <form class="form-horizontal">
+        <fieldset>
+          <legend>Post Something</legend>
+          <div class="form-group">
+            <div class="col-lg-10">
+              <textarea class="form-control" rows="3" id="textArea" ng-model="stuff.text"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2">
+              <button type="submit" class="btn btn-primary" ng-click="userPost(stuff)">Post</button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+
+  <div class="list-group">
+    <a href="#" class="list-group-item" ng-repeat="item in feed.results">
+      <h4 class="list-group-item-heading">{{item.verb}} <small>{{item.time | date:'medium'}}</small></h4>
+      <p class="list-group-item-text">{{item.tweet || item.youtube_id}}</p>
+    </a>
+  </div>
+
+  <pre>flatFeed: {{feed | json}}</pre>
 </div>
